@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import login from '@/views/login/loginPage'
 import register from '@/views/register/register'
 import home from '@/views/home/homePage'
+import retrievePw from '@/views/retrievePw/retrievePw'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
       path: '/home',
       name: 'homePage',
       component: home
+    },
+    {
+      path: '/retrievePw',
+      name: 'retrievePw',
+      component: retrievePw
     }
   ]
 })
