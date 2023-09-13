@@ -1,5 +1,27 @@
 <template>
- <div id='loginPage'></div>
+ <div id='loginPage'>
+  <div class="head_list"></div>
+  <div class="head_tit">
+    <div></div>
+    <p>MY-Mall</p>
+  </div>
+  <div class="content">
+    <div class="cont_it">
+      <div class="it_tit">
+        <p>用户登录</p>
+      </div>
+      <div class="it_user">
+        <img src="" alt="">
+        <input type="text">
+      </div>
+      <div class="it_pass">
+        <img src="" alt="">
+        <input type="text">
+      </div>
+      <div class="it_dl">登录</div>
+    </div>
+  </div>
+ </div>
 </template>
 
 <script>
@@ -8,9 +30,7 @@ export default {
   // import引入组件才能使用
   components: {},
   data () {
-    return {
-
-    }
+    return {}
   },
   // 计算属性
   computed: {},
@@ -38,5 +58,5 @@ export default {
 }
 </script>
 <style scoped>
-
+@import url(./loginPage.css);
 </style>
