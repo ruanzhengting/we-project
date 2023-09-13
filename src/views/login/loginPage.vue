@@ -1,13 +1,6 @@
 <template>
   <div id='loginPage'>
-    <div class="head_list"></div>
-    <div class="head_tit">
-      <div class="d_logo">
-        <i class="el-icon-goods"></i>
-      </div>
-      <p class="tit_p">MY-Mall</p>
-    </div>
-    <div class="content">
+    <loginModel>
       <div class="cont_it">
         <div class="it_tit">
           <p class="Name">用户登录</p>
@@ -26,27 +19,26 @@
         </div>
         <div class="it_dl">登录</div>
         <div class="it_bt">
-          <span>忘记密码</span>
-          <span>免费注册</span>
+          <span>
+            <router-link to="/retrievePw" class="wjmm">忘记密码</router-link>
+          </span>
+          <span>
+            <router-link to="/register" class="mfzc">免费注册</router-link>
+          </span>
         </div>
       </div>
-    </div>
-    <div class="bottom_btn">
-      <div class="_t">
-        幸福大学<span>|</span>
-        图书馆<span>|</span>
-        快乐学院
-      </div>
-      <div class="_b">Copyright 2023 Mall All rights Reserved</div>
-    </div>
+    </loginModel>
   </div>
 </template>
 
 <script>
+import loginModel from '@/components/loginModel.vue'
 export default {
   name: 'loginPage',
   // import引入组件才能使用
-  components: {},
+  components: {
+    loginModel
+  },
   data () {
     return {}
   },
@@ -75,6 +67,85 @@ export default {
   activated () { } // 如果页面有keep-alive缓存功能，这个函数会触发执行
 }
 </script>
-<style scoped>
-@import url(./loginPage.css);
+<style scoped lang="less">
+    .cont_it {
+      width: 390px;
+      background-color: #fff;
+
+      .it_tit {
+        .Name {
+          font-size: 18px;
+          font-weight: bold;
+          padding: 20px 0;
+          text-align: center;
+          border-bottom: 1px solid #c2c7cc;
+        }
+      }
+
+      .it_user,
+      .it_pass {
+        display: flex;
+        align-items: center;
+        margin: 0 23px;
+        border: 1px solid #bbbbbb;
+        height: 38px;
+        margin-top: 20px;
+
+        .it_us_item {
+          background-color: #f4f4f4;
+          height: 38px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-right: 1px solid #bbb;
+          width: 38px;
+
+          i {
+            font-size: 18px;
+            color: #8e8e8e;
+          }
+        }
+
+        input {
+          flex: 0.9;
+          height: 38px;
+          border: transparent;
+          padding-left: 10px;
+          outline: none;
+        }
+      }
+
+      .it_dl {
+        background-color: #1b598b;
+        line-height: 40px;
+        text-align: center;
+        height: 40px;
+        font-size: 15px;
+        color: #fff;
+        margin: 0 23px;
+        margin-top: 20px;
+      }
+
+      .it_bt {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        margin: 0 23px;
+        margin-top: 28px;
+        margin-bottom: 44px;
+
+        span {
+          font-size: 15px;
+          margin-left: 22px;
+          .wjmm{
+            color: #1b598b;
+            text-decoration: none;
+          }
+          .mfzc{
+            color: #000;
+            text-decoration: none;
+          }
+        }
+      }
+    }
 </style>

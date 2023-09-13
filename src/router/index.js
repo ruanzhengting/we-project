@@ -4,6 +4,7 @@ import login from '@/views/login/loginPage'
 import register from '@/views/register/register'
 import home from '@/views/home/homePage'
 import detailShopping from '@/views/detail/detailShopping'
+import retrievePw from '@/views/retrievePw/retrievePw'
 Vue.use(Router)
 
 export default new Router({
@@ -31,6 +32,11 @@ export default new Router({
       path: '/detailShopping',
       name: 'detailShopping',
       component: detailShopping
+    },
+    {
+      path: '/retrievePw',
+      name: 'retrievePw',
+      component: retrievePw
     }
   ]
 })
