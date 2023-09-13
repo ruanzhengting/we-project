@@ -2,21 +2,25 @@
  <div id='loginPage'>
   <div class="head_list"></div>
   <div class="head_tit">
-    <div></div>
-    <p>MY-Mall</p>
+    <div class="d_logo">
+      <i class="el-icon-goods"></i>
+    </div>
+    <p class="tit_p">MY-Mall</p>
   </div>
   <div class="content">
     <div class="cont_it">
       <div class="it_tit">
-        <p>用户登录</p>
+        <p class="Name">用户登录</p>
       </div>
       <div class="it_user">
-        <img src="" alt="">
-        <input type="text">
+        <div class="it_us_item">
+          <i class="el-icon-user-solid"></i>
+        </div>
+        <input type="text" placeholder="请输入用户名">
       </div>
       <div class="it_pass">
-        <img src="" alt="">
-        <input type="text">
+        <i class="el-icon-s-tools"></i>
+        <input type="password" placeholder="请输入密码">
       </div>
       <div class="it_dl">登录</div>
     </div>
