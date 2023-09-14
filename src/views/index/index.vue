@@ -142,6 +142,8 @@ export default {
     }
     .content{
       padding: 0 130px;
+      height: 100vh;
+      background-color:#f7f7f7;
     }
   }
 </style>

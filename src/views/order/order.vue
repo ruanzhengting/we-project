@@ -12,14 +12,16 @@
         <router-view></router-view>
       </div>
     </div>
+    <bottomModel></bottomModel>
   </div>
 </template>
-
 <script>
+import bottomModel from '../../components/bottomModel.vue';
 export default {
   name: 'order',
   // import引入组件才能使用
   components: {
+    bottomModel
   },
   data () {
     return {
@@ -41,8 +43,8 @@ export default {
   .order_main {
     display: flex;
     justify-content: space-between;
-
     .left_list {
+      width:100%;
       ul {
         li {
           font-size: 14px;
