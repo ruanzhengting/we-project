@@ -1,0 +1,207 @@
+#cartPage {
+  width: 100%;
+
+  .cart_t {
+    height: 42px;
+    background-color: #E9E9E9;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 22px;
+    margin-bottom: 9px;
+
+    div {
+      flex: 0.5;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .merchandise {
+      flex: 1;
+      text-align: left;
+    }
+
+    .check {
+      display: flex;
+      margin-left: 20px;
+
+      input {
+        margin-right: 9px;
+      }
+    }
+
+    .sum {
+      text-align: center;
+    }
+  }
+
+  .cart_c {
+    height: 124px;
+    border: 1px solid #ccc;
+    display: flex;
+    // justify-content: space-around;
+    align-items: center;
+
+    div {
+      font-size: 15px;
+    }
+
+    input {
+      margin-left: 20px;
+      margin-right: 55px;
+    }
+
+    .c_tit {
+      background-color: aqua;
+      display: flex;
+      align-items: center;
+      width: 558px;
+      margin-right: 55px;
+
+      .c_boxImg {
+        width: 98px !important;
+        height: 98px;
+        border: 1px solid #ccc;
+      }
+
+      p {
+        font-size: 13px;
+        margin-left: 12px;
+        white-space: wrap;
+        /* 防止文本换行 */
+        overflow: hidden;
+        /* 隐藏溢出的文本 */
+        text-overflow: ellipsis;
+        /* 添加省略号 */
+        width: 100%;
+      }
+    }
+
+    .c_quantity,
+    .c_money,
+    .c_total {
+      display: flex;
+    }
+
+    .c_money {
+      width: 68px;
+      margin-right: 112px;
+    }
+
+    .c_quantity {
+
+      div {
+        height: 24px;
+        border: 1px solid #ccc;
+        text-align: center;
+        margin: 0 5px;
+        padding: 5px 10px;
+      }
+
+      .sum {
+        width: 55px;
+      }
+    }
+
+    .c_total {
+      margin-left: 57px;
+      font-weight: bold;
+    }
+
+    .c_del {
+      margin-left: 150px;
+      color: #8E8E8E;
+    }
+  }
+
+  .cart_b {
+    height: 42px;
+    background-color: #E9E9E9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .b_le {
+      display: flex;
+      align-items: center;
+
+      .b_check {
+        display: flex;
+        align-items: center;
+
+        input {
+          margin: 0 20px;
+        }
+
+        p {
+          font-size: 15px;
+          font-weight: bold;
+        }
+      }
+
+
+      .b_del {
+        display: flex;
+        align-items: center;
+        color: #8E8E8E;
+        margin-left: 30px;
+        font-size: 14px;
+        font-weight: bold;
+
+        i {
+          margin-right: 9px;
+        }
+      }
+
+    }
+
+    .b_re {
+      display: flex;
+      align-items: center;
+
+      .b_sumPri {
+        display: flex;
+        align-items: center;
+
+        .sum{
+          font-size: 14px;
+          margin-right: 30px;
+        }
+        .pri {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          font-weight: bold;
+          color: #FF2525;
+          margin-right: 33px;
+        }
+      }
+
+      .b_js {
+        height: 42px;
+        width: 113px;
+        background-color: #215496;
+        font-size: 16px;
+        line-height: 42px;
+        text-align: center;
+        color: #fff;
+      }
+    }
+  }
+
+  .bottom_btn{
+    text-align: center;
+    font-size: 13px;
+    color: #636363;
+    ._t{
+      margin-top: 34px;
+      span{
+        margin: 0 12px;
+      }
+    }
+    ._b{
+      margin-top: 20px;
+    }
+  }
+}

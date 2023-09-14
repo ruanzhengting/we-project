@@ -1,5 +1,9 @@
 <template>
- <div id='index'></div>
+ <div id='index'>
+  <div class="main">
+    <h2 class="order">修改密码</h2>
+  </div>
+ </div>
 </template>
 
 <script>
@@ -37,6 +41,22 @@ export default {
   activated () { } // 如果页面有keep-alive缓存功能，这个函数会触发执行
 }
 </script>
-<style scoped>
-
+<style scoped lang="less">
+#index{
+  margin-top:20px;
+  margin-top:20px;
+  .main{
+    width:955px;
+    height:800px;
+    background-color:#fff;
+    padding:22px 17px 16px 13px;
+    box-sizing: border-box;
+    .order{
+      width:100%;
+      border-bottom:1px solid #c2c7cc;
+      padding-bottom:13px;
+      box-sizing: border-box;
+    }
+  }
+}
 </style>
