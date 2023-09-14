@@ -86,8 +86,8 @@ export default {
   }
   .main{
     margin-top: 30px;
-    padding: 0 130px;
     .search{
+      padding: 0 130px;
       display: flex;
       align-items: center;
       .logo{

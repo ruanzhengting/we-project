@@ -6,6 +6,7 @@ import home from '@/views/home/homePage'
 import detailShopping from '@/views/detail/detailShopping'
 import retrievePw from '@/views/retrievePw/retrievePw'
 import indexPage from '@/views/index/index'
+import personalPage from '@/views/personal/personalPage'
 Vue.use(Router)
 
 export default new Router({
@@ -44,6 +45,11 @@ export default new Router({
           path: '/detail',
           name: 'detailShopping',
           component: detailShopping
+        },
+        {
+          path: '/personal',
+          name: 'personalPage',
+          component: personalPage
         }
       ]
     }
