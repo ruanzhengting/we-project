@@ -1,12 +1,29 @@
 <template>
   <div id='personalPage'>
-    <!-- <div class="top">
-      <p>CSU-Mall> <span>我的订单</span></p>
-    </div> -->
-    <div class="content">
-      <div class="left"></div>
-      <div class="right"></div>
-    </div>
+    <div class="title">修改个人信息</div>
+    <ul class="list">
+      <li>
+        <table>用户名：</table>
+        <p>Admin</p>
+      </li>
+      <li>
+        <table>电&nbsp;&nbsp;&nbsp;话：</table>
+        <input type="text" class="inp">
+      </li>
+      <li>
+        <table>邮&nbsp;&nbsp;&nbsp;箱：</table>
+        <input type="text" class="inp">
+      </li>
+      <li>
+        <table>问&nbsp;&nbsp;&nbsp;题：</table>
+        <input type="text" class="inp">
+      </li>
+      <li>
+        <table>答&nbsp;&nbsp;&nbsp;案：</table>
+        <input type="text" class="inp">
+      </li>
+    </ul>
+    <button class="btn">提交修改</button>
   </div>
 </template>
 
@@ -56,28 +73,48 @@ export default {
 
 <style scoped lang="less">
 #personalPage{
-  width: 100%;
-  .top{
-    width: 100%;
-    height: 48px;
-    background-color: rgba(0,0,0,.1);
-    margin-top: 30px;
-    border-top:2px solid #1B598B;
-    p{
-      padding: 0 130px;
-      font-size: 14px;
-      span{
-        color: #1B598B;
+  width: 950px;
+  height: 345px;
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 0 15px;
+  .title{
+    line-height: 52px;
+    border-bottom: 1px solid #c2c7cc;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .list{
+    margin-top: 15px;
+    li{
+      display: flex;
+      line-height: 30px;
+      margin-bottom: 8px;
+      table{
+        font-size: 14px;
+        margin-right: 48px;
+      }
+      p{
+        line-height: 30px;
+        font-size: 14px;
+      }
+      .inp{
+        width: 325px;
+        height: 28px;
+        background: none;
+        border: 1px solid #c2c7cc;
+        border-radius: 5px;
       }
     }
   }
-  .content{
-    margin-top: 20px;
-    .right{
-      width: 952px;
-      height: 343px;
-      background-color: #fff;
-    }
+  .btn{
+    width: 128px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #215496;
+    color: #fff;
+    margin: 10px 0 0 105px;
   }
 }
 </style>
