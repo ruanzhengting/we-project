@@ -42,16 +42,10 @@
 </template>
 
 <script>
-import detailTop from '@/components/detail/detailTop.vue'
-import search from '@/components/detail/search.vue'
-import detailBottom from '@/components/detail/detailBottom.vue'
 export default {
   name: 'detailShopping',
   // import引入组件才能使用
   components: {
-    detailTop,
-    search,
-    detailBottom
   },
   data () {
     return {

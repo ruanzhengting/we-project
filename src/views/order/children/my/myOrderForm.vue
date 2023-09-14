@@ -1,17 +1,6 @@
 <template>
   <div id='myOrderForm'>
     <div class="main">
-      <div class=""></div>
-      <div class="left">
-        <p>个人中心</p>
-        <p>我的订单</p>
-        <p>修改密码</p>
-        <p>关于MY-Mall</p>
-       <router-view/>
-      </div>
-      <div class="right">
-
-      </div>
     </div>
   </div>
 </template>

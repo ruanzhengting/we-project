@@ -1,14 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/views/login/loginPage'
-import register from '@/views/register/register'
-import home from '@/views/home/homePage'
-import detailShopping from '@/views/detail/detailShopping'
-import retrievePw from '@/views/retrievePw/retrievePw'
-import indexPage from '@/views/index/index'
-import cartPage from '@/views/cart/cartPage'
-import personalPage from '@/views/personal/personalPage'
-import myOrderFrom from '@/views/my/myOrderForm'
 Vue.use(Router)
 
 export default new Router({
@@ -20,48 +11,60 @@ export default new Router({
     {
       path: '/login',
       name: 'loginPage',
-      component: login
+      component: () => import('@/views/login/loginPage')
     },
     {
       path: '/register',
       name: 'register',
-      component: register
+      component: () => import('@/views/register/register')
     },
     {
       path: '/retrievePw',
       name: 'retrievePw',
-      component: retrievePw
+      component: () => import('@/views/retrievePw/retrievePw')
     },
     {
       path: '/index',
       name: 'index',
-      component: indexPage,
+      component: () => import('@/views/index/index'),
       redirect: '/home',
       children: [
         {
           path: '/home/:username',
           name: 'homePage',
-          component: home
+          component: () => import('@/views/home/homePage')
         },
         {
           path: '/detail',
           name: 'detailShopping',
-          component: detailShopping
+          component: () => import('@/views/detail/detailShopping')
         },
         {
           path: '/cart',
           name: 'cartPage',
-          component: cartPage
+          component: () => import('@/views/cart/cartPage')
         },
         {
-          path: '/personal',
-          name: 'personalPage',
-          component: personalPage
-        },
-        {
-          path: '/my/orderFrom',
-          name: 'myOrderFrom',
-          component: myOrderFrom
+          path: '/order',
+          name: 'order',
+          component: () => import('@/views/order/order'),
+          children: [
+            {
+              path: '/personal',
+              name: 'personalPage',
+              component: () => import('@/views/order/children/personal/personalPage')
+            },
+            {
+              path: '/my',
+              name: 'myOrderFrom',
+              component: () => import('@/views/order/children/my/myOrderForm')
+            },
+            {
+              path: '/change',
+              name: 'index',
+              component: () => import('@/views/order/children/changePsd/index')
+            }
+          ]
         }
       ]
     }

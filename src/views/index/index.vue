@@ -29,6 +29,9 @@
           <button>搜索</button>
         </div>
       </div>
+      <nextModal>
+        <span>购物车</span>
+      </nextModal>
       <div class="content">
         <router-view></router-view>
       </div>
@@ -37,10 +40,13 @@
 </template>
 
 <script>
+import nextModal from '@/components/nextModal.vue'
 export default {
   name: 'index',
   // import引入组件才能使用
-  components: {},
+  components: {
+    nextModal
+  },
   data () {
     return {
       user: ''

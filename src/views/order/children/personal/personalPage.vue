@@ -1,8 +1,8 @@
 <template>
   <div id='personalPage'>
-    <div class="top">
+    <!-- <div class="top">
       <p>CSU-Mall> <span>我的订单</span></p>
-    </div>
+    </div> -->
     <div class="content">
       <div class="left"></div>
       <div class="right"></div>
@@ -14,7 +14,8 @@
 export default {
   name: 'personalPage',
   // import引入组件才能使用
-  components: {},
+  components: {
+  },
   data () {
     return {
 
