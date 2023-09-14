@@ -88,6 +88,7 @@ export default {
   }
   .main{
     .search{
+      padding: 0 130px;
       display: flex;
       height: 100px;
       border-bottom: 2px solid #1B598B;
