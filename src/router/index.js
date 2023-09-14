@@ -5,6 +5,7 @@ import register from '@/views/register/register'
 import home from '@/views/home/homePage'
 import detailShopping from '@/views/detail/detailShopping'
 import retrievePw from '@/views/retrievePw/retrievePw'
+import indexPage from '@/views/index/index'
 Vue.use(Router)
 
 export default new Router({
@@ -24,19 +25,27 @@ export default new Router({
       component: register
     },
     {
-      path: '/home/:username',
-      name: 'homePage',
-      component: home
-    },
-    {
-      path: '/detailShopping',
-      name: 'detailShopping',
-      component: detailShopping
-    },
-    {
       path: '/retrievePw',
       name: 'retrievePw',
       component: retrievePw
+    },
+    {
+      path: '/index',
+      name: 'index',
+      component: indexPage,
+      redirect: '/home',
+      children: [
+        {
+          path: '/home/:username',
+          name: 'homePage',
+          component: home
+        },
+        {
+          path: '/detail',
+          name: 'detailShopping',
+          component: detailShopping
+        }
+      ]
     }
   ]
 })

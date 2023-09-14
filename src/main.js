@@ -6,6 +6,7 @@ import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
+const bus = new Vue()
 axios.defaults.baseURL = 'http://127.0.0.1:2525'
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
@@ -14,6 +15,7 @@ const link = document.createElement('link')
 link.rel = 'stylesheet'
 link.href = '//at.alicdn.com/t/c/font_4249687_96g55ls2pvn.css'
 document.head.appendChild(link)
+Vue.prototype.$bus = bus
 Vue.use(Element, {size: 'small', zIndex: 3000})
 /* eslint-disable no-new */
 new Vue({

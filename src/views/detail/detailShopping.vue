@@ -1,7 +1,5 @@
 <template>
   <div id='detailShopping'>
-    <detailTop></detailTop>
-    <search></search>
     <div class="main">
       <div class="left">
         <div class="big-img">
@@ -98,6 +96,7 @@ export default {
     display:flex;
     justify-content:start;
     background-color:#f7f7f7;
+    margin-top: 10px;
     .left{
       .big-img img{
         border:2px solid #d2d2d2;
