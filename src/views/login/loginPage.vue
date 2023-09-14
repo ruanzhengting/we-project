@@ -59,7 +59,7 @@ export default {
           account: this.user
         }
       })
-      // console.log(res)
+      console.log(res)
       if (res.data.value.length === 0) {
         this.msg = '您的账号不存在，请先注册'
         return this.open4()
