@@ -12,7 +12,7 @@
           </div>
           <input type="text" placeholder="请输入用户名">
         </div>
-        <div class="it_dl">登录</div>
+        <div class="it_dl" >登录</div>
         <div class="it_bt">
           <span>
             <router-link to="/login">返回登录</router-link>
@@ -32,7 +32,8 @@ export default {
     loginModel
   },
   data () {
-    return {}
+    return {
+    }
   },
   // 计算属性
   computed: {},
@@ -40,7 +41,6 @@ export default {
   watch: {},
   // 方法集合
   methods: {
-
   },
   // 生命周期，创建完成时（可以访问当前this实例）
   created () {

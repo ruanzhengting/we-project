@@ -29,7 +29,9 @@
           <button>搜索</button>
         </div>
       </div>
-      <router-view></router-view>
+      <div class="content">
+        <router-view></router-view>
+      </div>
     </div>
  </div>
 </template>
@@ -85,10 +87,11 @@ export default {
     }
   }
   .main{
-    margin-top: 30px;
-    padding: 0 130px;
     .search{
       display: flex;
+      height: 100px;
+      border-bottom: 2px solid #1B598B;
+      justify-content: center;
       align-items: center;
       .logo{
         display: flex;
@@ -129,6 +132,9 @@ export default {
           border: none;
         }
       }
+    }
+    .content{
+      padding: 0 130px;
     }
   }
 </style>

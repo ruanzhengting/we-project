@@ -36,4 +36,5 @@ router.get('/psg', (req, res, next) => {
     res.s(result, '查询')
   })
 })
+
 module.exports = router
