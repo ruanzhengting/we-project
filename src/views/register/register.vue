@@ -8,31 +8,31 @@
             <li>
               <div class="icon"><i class="el-icon-user-solid"></i></div>
               <div class="inp">
-                <input type="text" placeholder="请输入用户名">
+                <input type="text" placeholder="请输入用户名" v-model="user">
               </div>
             </li>
             <li>
               <div class="icon"><i class="el-icon-lock"></i></div>
               <div class="inp">
-                <input type="text" placeholder="请输入密码">
+                <input type="text" placeholder="请输入密码" v-model="pwd">
               </div>
             </li>
             <li>
               <div class="icon"><i class="el-icon-lock"></i></div>
               <div class="inp">
-                <input type="text" placeholder="请再次输入密码">
+                <input type="text" placeholder="请再次输入密码" v-model="newPwd">
               </div>
             </li>
             <li>
               <div class="icon"><i class="el-icon-phone"></i></div>
               <div class="inp">
-                <input type="text" placeholder="请输入电话">
+                <input type="text" placeholder="请输入电话" v-model="tel">
               </div>
             </li>
             <li>
               <div class="icon"><i class="el-icon-message"></i></div>
               <div class="inp">
-                <input type="text" placeholder="请输入邮箱">
+                <input type="text" placeholder="请输入邮箱" v-model="email">
               </div>
             </li>
             <li>
@@ -48,7 +48,7 @@
               </div>
             </li>
           </ul>
-          <button class="btn">立即注册</button>
+          <button class="btn" @click="register" :plain="true">立即注册</button>
           <div class="box">
             <router-link to="/login">已有账号，去登录>></router-link>
           </div>
@@ -68,7 +68,12 @@ export default {
   },
   data () {
     return {
-
+      user: '',
+      pwd: '',
+      newPwd: '',
+      tel: '',
+      email: '',
+      msg: '这一条错误信息'
     }
   },
   // 计算属性
@@ -77,7 +82,48 @@ export default {
   watch: {},
   // 方法集合
   methods: {
-
+    async register () {
+      if (this.user === '' || this.pwd === '' || this.newPwd === '' || this.tel === '' || this.email === '') {
+        this.msg = '输入框不能为空'
+        return this.open4()
+      }
+      if (this.pwd !== this.newPwd) {
+        this.msg = '两次输入的密码不一致'
+        return this.open4()
+      }
+      const res = await this.$axios.get('/user', {
+        params: {
+          account: this.user
+        }
+      })
+      console.log(res)
+      if (res.data.value.length > 0) {
+        this.msg = '该账号已注册'
+        return this.open4()
+      }
+      var resl = await this.$axios.get('/addUser', {
+        params: {
+          account: this.user,
+          password: this.pwd,
+          username: this.user,
+          tel: this.tel,
+          email: this.email
+        }
+      })
+      console.log(resl)
+      if (resl.data.value.length > 0) {
+        this.open2()
+      }
+    },
+    open4 () {
+      this.$message.error(this.msg)
+    },
+    open2 () {
+      this.$message({
+        message: '恭喜你，注册成功',
+        type: 'success'
+      })
+    }
   },
   // 生命周期,创建完成时(可以访问当前this实例)
   created () {
@@ -86,21 +132,7 @@ export default {
   // 生命周期:挂载完成时(可以访问DOM元素)
   mounted () {
 
-  },
-  // 生命周期：创建之前
-  beforeCreate () { },
-  // 生命周期：挂载之前
-  beforeMount () { },
-  // 生命周期：更新之前
-  beforeUpdate () { },
-  // 生命周期：更新之后
-  updated () { },
-  // 生命周期：销毁之前
-  beforeDestroy () { },
-  // 生命周期：销毁完成
-  destroyed () { },
-  // 如果页面有keep-alive缓存功能,这个函数会触发执行
-  activated () { }
+  }
 }
 </script>
 

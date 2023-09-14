@@ -41,7 +41,6 @@ export default {
   .order_main {
     display: flex;
     justify-content: space-between;
-
     .left_list {
       ul {
         li {

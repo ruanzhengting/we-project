@@ -36,5 +36,15 @@ router.get('/psg', (req, res, next) => {
     res.s(result, '查询')
   })
 })
+// 添加
+router.get('/addUser', (req, res, next) => {
+  var data = req.query
+  console.log(data)
+  var sql = `INSERT INTO userinfo VALUES (null, ${req.query.account}, ${data.password}, ${data.username}, ${data.tel}, ${data.email})`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '插入')
+  })
+})
 
 module.exports = router
