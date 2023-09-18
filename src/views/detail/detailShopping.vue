@@ -16,12 +16,9 @@
           <li class="price">价格:<span>￥{{ item.price }}</span></li>
           <li class="inventory">库存:<span>90</span></li>
           <li class="num">数量:
-            <div>
-              <p>{{ item.num }}</p>
-              <div>
-                 <span>+</span><span class="j">-</span>
-              </div>
-            </div>
+            <template>
+                  <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字" size="medium"></el-input-number>
+              </template>
           </li>
           <li class="add">
             <button >加入购物车</button>
@@ -34,7 +31,7 @@
           <li>商品详情</li>
         </ul>
         <div class="box-img">
-          <img src="../../image/detail/detail-3.jpg" alt="">
+          <img v-for="(ite, inde) in goodsData[0].img_bnr.split(',')" :key="inde" :src="`../../../static/goods/${ite}`" alt="">
         </div>
     </div>
     <bottomModel></bottomModel>
@@ -53,7 +50,8 @@ export default {
     return {
       gid: null,
       goodsData: [],
-      itemImg: ''
+      itemImg: '',
+      num: 1
     }
   },
   // 计算属性
@@ -69,6 +67,9 @@ export default {
       console.log(res)
       this.goodsData = res.data.value
       this.itemImg = res.data.value[0].src
+    },
+    handleChange (value) {
+      console.log(value)
     }
   },
   // 生命周期,创建完成时(可以访问当前this实例)

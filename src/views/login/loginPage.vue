@@ -74,6 +74,7 @@ export default {
         this.msg = '您的密码不正确，请重新输入'
         return this.open4()
       }
+      localStorage.setItem('userinfo', JSON.stringify(res1.data.value[0]))
       this.$router.push(`/home/${res1.data.value[0].username}`)
     },
     open4 () {

@@ -15,12 +15,12 @@
           <i class="el-icon-shopping-cart-2"></i>
           <span>购物车(0)</span>
         </div>
-        <div class="my-ding">我的订单</div>
+        <router-link to="/personal" class="my-ding">我的订单</router-link>
       </div>
   </div>
   <div class="main">
       <div class="search">
-        <div class="logo">
+        <div class="logo" @click="linkHome">
           <div class="icon"><i class="el-icon-goods"></i></div>
           <div>MY-Mall</div>
         </div>
@@ -60,6 +60,11 @@ export default {
   methods: {
     linkCart () {
       this.$router.push('/cart')
+    },
+    linkHome () {
+      var userMsg = JSON.parse(localStorage.getItem('userinfo')) || []
+      console.log(userMsg)
+      this.$router.push(`/home/${userMsg.username}`)
     }
   },
   // 生命周期，创建完成时（可以访问当前this实例）
