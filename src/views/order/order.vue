@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import bottomModel from '../../components/bottomModel.vue'
+import bottomModel from '@/components/bottomModel.vue'
 export default {
   name: 'order',
   // import引入组件才能使用

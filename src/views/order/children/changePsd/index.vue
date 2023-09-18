@@ -2,6 +2,14 @@
  <div id='index'>
   <div class="main">
     <h2 class="order">修改密码</h2>
+    <div class="form-box">
+     <ul>
+      <li>原始密码:<input type="text"></li>
+      <li class="xin">新密码:<input type="text"/></li>
+      <li>确认密码:<input type="text"/></li>
+      <li><button>提交修改</button></li>
+     </ul>
+    </div>
   </div>
  </div>
 </template>
@@ -44,10 +52,9 @@ export default {
 <style scoped lang="less">
 #index{
   margin-top:20px;
-  margin-top:20px;
   .main{
     width:955px;
-    height:800px;
+    height:267px;
     background-color:#fff;
     padding:22px 17px 16px 13px;
     box-sizing: border-box;
@@ -56,6 +63,34 @@ export default {
       border-bottom:1px solid #c2c7cc;
       padding-bottom:13px;
       box-sizing: border-box;
+    }
+    .form-box{
+      width:100%;
+      font-size:12px;
+      font-weight:600;
+      margin-top:17px;
+      li{
+        display:flex;
+        justify-content: start;
+        align-items:center;
+        input{
+          border:1px solid #bbbbbb;
+          border-radius:6px;
+          height:28px;
+          margin-left:33px;
+          margin-bottom:8px;
+        }
+        button{
+          padding:13px 31px 12px 31px;
+          box-sizing: border-box;
+          background-color:#215496;
+          color:#fff;
+          margin-left:85px;
+        }
+      }
+      .xin{
+        margin-left:12px;
+      }
     }
   }
 }

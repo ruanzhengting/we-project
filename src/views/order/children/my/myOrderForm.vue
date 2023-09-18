@@ -72,7 +72,7 @@ export default {
   margin-top:20px;
   .main{
     width:955px;
-    height:800px;
+    height:100vh;
     background-color:#fff;
     padding:22px 17px 16px 13px;
     box-sizing: border-box;
