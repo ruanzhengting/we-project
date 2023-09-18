@@ -35,7 +35,7 @@ export default new Router({
           component: () => import('@/views/home/homePage')
         },
         {
-          path: '/detail',
+          path: '/detail/:id',
           name: 'detailShopping',
           component: () => import('@/views/detail/detailShopping')
         },

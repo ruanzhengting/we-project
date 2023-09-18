@@ -47,4 +47,21 @@ router.get('/addUser', (req, res, next) => {
   })
 })
 
+// 查询表数据
+router.get('/goods', (req, res, next) => {
+  var sql = `SELECT * FROM wxdata`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '查询')
+  })
+})
+
+// 查询详情
+router.get('/detail', (req, res, next) => {
+  var sql = `SELECT * FROM wxdata WHERE gid="${req.query.gid}"`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '查询')
+  })
+})
 module.exports = router

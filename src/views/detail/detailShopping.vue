@@ -1,13 +1,12 @@
 <template>
-  <div id='detailShopping'>
-    <div class="main">
+  <div id='detailShopping' >
+    <div class="main" v-for="(item, i) in goodsData" :key="i">
       <div class="left">
         <div class="big-img">
-          <img src="../../image/detail/detail-1.jpg" alt="">
+          <img :src="`../../../static/goods/${itemImg}`" alt="">
         </div>
         <div class="little-img">
-          <img src="../../image/detail/detail-1.jpg" alt="" class="active">
-          <img src="../../image/detail/detail-2.jpg" alt="">
+          <img v-for="(it, ind) in item.img_bnr.split(',')" :key="ind" :src="`../../../static/goods/${it}`" @click="itemImg = it">
         </div>
       </div>
       <div class="right">
@@ -19,25 +18,24 @@
         </div>
         <div></div> -->
         <ul>
-          <li class="name"><span>联想(Lenovo)天逸510S 英特尔酷睿i3 个人商务台式机电脑整机(i3-9100 8G1TWiFi三年上门Win10)21.5英寸</span></li>
+          <li class="name"><span>{{ item.title }}</span></li>
           <li class="title"><span>[新品推荐] 全新第10代酷睿处理器，80万小时稳定测试保障，简约环保大机箱!</span></li>
-          <li class="price">价格:<span>￥2799.00</span></li>
+          <li class="price">价格:<span>￥{{ item.price }}</span></li>
           <li class="inventory">库存:<span>90</span></li>
           <li class="num">数量:
             <div>
-              <p>1</p>
+              <p>{{ item.num }}</p>
               <div>
                  <span>+</span><span class="j">-</span>
               </div>
             </div>
           </li>
           <li class="add">
-            <button>加入购物车</button>
+            <button @click="addCart">加入购物车</button>
           </li>
         </ul>
       </div>
     </div>
-    <detailBottom></detailBottom>
   </div>
 </template>
 
@@ -49,7 +47,9 @@ export default {
   },
   data () {
     return {
-
+      gid: null,
+      goodsData: [],
+      itemImg: ''
     }
   },
   // 计算属性
@@ -58,11 +58,20 @@ export default {
   watch: {},
   // 方法集合
   methods: {
-
+    async getDetailData () {
+      var res = await this.$axios('/detail', {
+        params: {gid: this.gid}
+      })
+      console.log(res)
+      this.goodsData = res.data.value
+      this.itemImg = res.data.value[0].src
+    }
   },
   // 生命周期,创建完成时(可以访问当前this实例)
   created () {
-
+    console.log(this.$route.params.id)
+    this.gid = this.$route.params.id
+    this.getDetailData()
   },
   // 生命周期:挂载完成时(可以访问DOM元素)
   mounted () {
@@ -93,6 +102,8 @@ export default {
     margin-top: 10px;
     .left{
       .big-img img{
+        width: 410px;
+        height: 410px;
         border:2px solid #d2d2d2;
       }
       .little-img img{

@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="head-caozuo">
-        <div class="cart">
+        <div class="cart" @click="linkCart">
           <i class="el-icon-shopping-cart-2"></i>
           <span>购物车(0)</span>
         </div>
@@ -58,7 +58,9 @@ export default {
   watch: {},
   // 方法集合
   methods: {
-
+    linkCart () {
+      this.$router.push('/cart')
+    }
   },
   // 生命周期，创建完成时（可以访问当前this实例）
   created () {
@@ -89,6 +91,9 @@ export default {
       font-size: 13px;
       &>div{
         margin-right: 10px;
+      }
+      .cart{
+        cursor: pointer;
       }
     }
   }
