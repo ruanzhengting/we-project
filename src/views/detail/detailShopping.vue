@@ -10,13 +10,6 @@
         </div>
       </div>
       <div class="right">
-        <!-- <div class="name">
-          联想(Lenovo)天逸510S 英特尔酷睿i3 个人商务台式机电脑整机(i3-9100 8G1TWiFi三年上门Win10)21.5英寸
-        </div>
-        <div class="title">
-          [新品推荐] 全新第10代酷睿处理器，80万小时稳定测试保障，简约环保大机箱!
-        </div>
-        <div></div> -->
         <ul>
           <li class="name"><span>{{ item.title }}</span></li>
           <li class="title"><span>[新品推荐] 全新第10代酷睿处理器，80万小时稳定测试保障，简约环保大机箱!</span></li>
