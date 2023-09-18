@@ -111,8 +111,9 @@ export default {
         }
       })
       console.log(resl)
-      if (resl.data.value.length > 0) {
+      if (resl.data.code === 200) {
         this.open2()
+        this.$router.push('/login')
       }
     },
     open4 () {
