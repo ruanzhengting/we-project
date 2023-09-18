@@ -29,14 +29,25 @@
         </ul>
       </div>
     </div>
+    <div class="bottom">
+        <ul class="top">
+          <li>商品详情</li>
+        </ul>
+        <div class="box-img">
+          <img src="../../image/detail/detail-3.jpg" alt="">
+        </div>
+    </div>
+    <bottomModel></bottomModel>
   </div>
 </template>
 
 <script>
+import bottomModel from '../../components/bottomModel.vue'
 export default {
   name: 'detailShopping',
   // import引入组件才能使用
   components: {
+    bottomModel
   },
   data () {
     return {
@@ -80,6 +91,11 @@ export default {
 }
 </script>
 <style scoped lang="less">
+#detailShopping{
+  width:100%;
+  height:100%;
+  background-color:#f7f7f7;
+}
 *{
   margin:0;
   padding:0;
@@ -193,4 +209,29 @@ export default {
       }
     }
   }
+  .bottom{
+      width:100%;
+      height:100%;
+      padding:0px 162px 0px 153px;
+      box-sizing:border-box;
+      ul{
+        width:100%;
+        background-color:#e9e9e9;
+        border-bottom:3px solid #215496;
+        display:flex;
+        justify-content:start;
+        li{
+          padding:16px 22px 18px 22px;
+          background-color:#215496;
+          color:#fff;
+        }
+      }
+      .box-img{
+        width:100%;
+        margin-top:14px;
+        img{
+          width:100%;
+        }
+      }
+    }
 </style>
