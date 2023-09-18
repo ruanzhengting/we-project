@@ -3,8 +3,8 @@
     <template>
       <div class="block">
         <el-carousel height="350px">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3 class="small">{{ item }}</h3>
+          <el-carousel-item v-for="item in bnrArr" :key="item">
+           <img :src="`../../static/bnr/${item}`" alt="">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -19,7 +19,7 @@ export default {
   components: {},
   data () {
     return {
-
+      bnrArr: ['bnr1.png', 'bnr2.png', 'bnr3.png']
     }
   },
   // 计算属性
@@ -45,7 +45,10 @@ export default {
   .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
   }
-
+  .el-carousel__item img{
+    width: 100%;
+    height: 100%;
+  }
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
   }

@@ -24,7 +24,7 @@
             </div>
           </li>
           <li class="add">
-            <button @click="addCart">加入购物车</button>
+            <button >加入购物车</button>
           </li>
         </ul>
       </div>
