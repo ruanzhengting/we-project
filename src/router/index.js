@@ -30,7 +30,7 @@ export default new Router({
       redirect: '/home',
       children: [
         {
-          path: '/home/:username',
+          path: '/home',
           name: 'homePage',
           component: () => import('@/views/home/homePage')
         },

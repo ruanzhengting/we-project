@@ -63,4 +63,23 @@ router.get('/detail', (req, res, next) => {
     res.s(result, '查询')
   })
 })
+
+// 添加购物车
+router.get('/addCart', (req, res, next) => {
+  var sql = `INSERT INTo shop_data VALUES (null,'${req.query.gid}', '${req.query.src}', '${req.query.title}', '${req.query.price}', '${req.query.num}')`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '插入')
+  })
+})
+
+// 查看购物车
+router.get('/cart', (req, res, next) => {
+  var sql = `SELECT * FROM shop_data`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '查询')
+  })
+})
+
 module.exports = router

@@ -13,7 +13,7 @@
       <div class="head-caozuo">
         <div class="cart" @click="linkCart">
           <i class="el-icon-shopping-cart-2"></i>
-          <span>购物车(0)</span>
+          <span>购物车({{ num }})</span>
         </div>
         <router-link to="/personal" class="my-ding">我的订单</router-link>
       </div>
@@ -41,6 +41,7 @@
 
 <script>
 import nextModal from '@/components/nextModal.vue'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'index',
   // import引入组件才能使用
@@ -53,26 +54,27 @@ export default {
     }
   },
   // 计算属性
-  computed: {},
+  computed: {
+    ...mapState('shop', ['num'])
+  },
   // 监听data中的数据变化
   watch: {},
   // 方法集合
   methods: {
+    ...mapActions('shop', ['updateNumSync']),
     linkCart () {
       this.$router.push('/cart')
     },
     linkHome () {
       var userMsg = JSON.parse(localStorage.getItem('userinfo')) || []
       console.log(userMsg)
-      this.$router.push(`/home/${userMsg.username}`)
+      this.$router.push(`/home`)
     }
   },
   // 生命周期，创建完成时（可以访问当前this实例）
   created () {
-    this.$bus.$on('user', (msg) => {
-      console.log(msg)
-      this.user = msg
-    })
+    var userMsg = JSON.parse(localStorage.getItem('userinfo')) || []
+    this.user = userMsg.account
   },
   mounted () {
   }
