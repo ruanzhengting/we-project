@@ -63,4 +63,24 @@ router.get('/detail', (req, res, next) => {
     res.s(result, '查询')
   })
 })
+
+// 查询密码
+router.get('/psd',(req,res,next)=>{
+  var data = req.query;
+  var sql = `SELECT * FROM userinfo WHERE username='${data.username}''`
+  db.query(sql,(err,result) => {
+    if(err) return next(err)
+    res.s(result,'查询')
+  })
+})
+
+// 修改密码
+router.get('/uppad',(req,res,next)=>{
+  var data = req.query;
+  var sql = `UPDATE userinfo SET password='${data.password}' WHERE username='${data.username}'`
+  db.query(sql,(err,result)=>{
+    if(err) return next(err)
+    res.s(result,'修改')
+  })
+})
 module.exports = router
