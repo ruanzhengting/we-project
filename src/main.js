@@ -6,6 +6,7 @@ import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
+import store from './store'
 const bus = new Vue()
 axios.defaults.baseURL = 'http://127.0.0.1:2525'
 Vue.prototype.$axios = axios
@@ -21,6 +22,7 @@ Vue.use(Element, {size: 'small', zIndex: 3000})
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

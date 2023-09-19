@@ -1,12 +1,13 @@
 <template>
-  <div id='detailShopping' >
+  <div id='detailShopping'>
     <div class="main" v-for="(item, i) in goodsData" :key="i">
       <div class="left">
         <div class="big-img">
           <img :src="`../../../static/goods/${itemImg}`" alt="">
         </div>
         <div class="little-img">
-          <img v-for="(it, ind) in item.img_bnr.split(',')" :key="ind" :src="`../../../static/goods/${it}`" @click="itemImg = it">
+          <img v-for="(it, ind) in item.img_bnr.split(',')" :key="ind" :src="`../../../static/goods/${it}`"
+            @click="itemImg = it">
         </div>
       </div>
       <div class="right">
@@ -17,22 +18,24 @@
           <li class="inventory">库存:<span>90</span></li>
           <li class="num">数量:
             <template>
-                  <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字" size="medium"></el-input-number>
-              </template>
+              <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"
+                size="medium"></el-input-number>
+            </template>
           </li>
           <li class="add">
-            <button >加入购物车</button>
+            <button @click="addCart">加入购物车</button>
           </li>
         </ul>
       </div>
     </div>
     <div class="bottom">
-        <ul class="top">
-          <li>商品详情</li>
-        </ul>
-        <div class="box-img">
-          <img v-for="(ite, inde) in goodsData[0].img_bnr.split(',')" :key="inde" :src="`../../../static/goods/${ite}`" alt="">
-        </div>
+      <ul class="top">
+        <li>商品详情</li>
+      </ul>
+      <div class="box-img">
+        <img v-for="(ite, inde) in goodsData[0].img_bnr.split(',')" :key="inde" :src="`../../../static/goods/${ite}`"
+          alt="">
+      </div>
     </div>
     <bottomModel></bottomModel>
   </div>
@@ -40,6 +43,7 @@
 
 <script>
 import bottomModel from '../../components/bottomModel.vue'
+import { mapActions } from 'vuex'
 export default {
   name: 'detailShopping',
   // import引入组件才能使用
@@ -51,7 +55,8 @@ export default {
       gid: null,
       goodsData: [],
       itemImg: '',
-      num: 1
+      num: 1,
+      modalMsg: '加入购物车成功'
     }
   },
   // 计算属性
@@ -60,9 +65,10 @@ export default {
   watch: {},
   // 方法集合
   methods: {
+    ...mapActions('shop', ['updateNumSync']),
     async getDetailData () {
       var res = await this.$axios('/detail', {
-        params: {gid: this.gid}
+        params: { gid: this.gid }
       })
       console.log(res)
       this.goodsData = res.data.value
@@ -70,6 +76,29 @@ export default {
     },
     handleChange (value) {
       console.log(value)
+    },
+    async addCart () {
+      var reslove = await this.$axios.get('/addCart', {
+        params: {
+          gid: this.goodsData[0].gid,
+          src: this.goodsData[0].src,
+          title: this.goodsData[0].title,
+          price: this.goodsData[0].price,
+          num: this.goodsData[0].num
+        }
+      })
+      console.log(reslove)
+      if (reslove.data.code === 200) {
+        this.successMod()
+        this.updateNumSync()
+      }
+    },
+    successMod () {
+      this.$notify({
+        title: '成功',
+        message: this.modalMsg,
+        type: 'success'
+      })
     }
   },
   // 生命周期,创建完成时(可以访问当前this实例)
@@ -77,6 +106,7 @@ export default {
     console.log(this.$route.params.id)
     this.gid = this.$route.params.id
     this.getDetailData()
+    this.updateNumSync()
   },
   // 生命周期:挂载完成时(可以访问DOM元素)
   mounted () {
@@ -92,147 +122,169 @@ export default {
 }
 </script>
 <style scoped lang="less">
-#detailShopping{
-  width:100%;
-  height:100%;
-  background-color:#f7f7f7;
+#detailShopping {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
 }
-*{
-  margin:0;
-  padding:0;
-  list-style:none;
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-  .main{
-    width:100%;
-    padding:15px 162px 19px 153px;
-    box-sizing: border-box;
-    display:flex;
-    justify-content:start;
-    background-color:#f7f7f7;
-    margin-top: 10px;
-    .left{
-      .big-img img{
-        width: 410px;
-        height: 410px;
-        border:2px solid #d2d2d2;
-      }
-      .little-img img{
-        width:97px;
-        height:97px;
-        border:2px solid #d2d2d2;
-      }
-      .little-img img.active{
-        border:2px solid #698cb9;
+
+.main {
+  width: 100%;
+  padding: 15px 162px 19px 153px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: start;
+  background-color: #f7f7f7;
+  margin-top: 10px;
+
+  .left {
+    .big-img img {
+      width: 410px;
+      height: 410px;
+      border: 2px solid #d2d2d2;
+    }
+
+    .little-img img {
+      width: 97px;
+      height: 97px;
+      border: 2px solid #d2d2d2;
+    }
+
+    .little-img img.active {
+      border: 2px solid #698cb9;
+    }
+  }
+
+  .right {
+    margin-left: 27px;
+    font-size: 20px;
+
+    .title {
+      color: #003a87;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .price {
+      width: 100%;
+      background-color: #e9e9e9;
+      font-size: 16px;
+      padding: 18px 0px 18px 13px;
+      color: #494949;
+      margin-top: 36px;
+
+      span {
+        font-size: 18px;
+        color: #ff2424;
+        font-weight: 600;
+        margin-left: 30px;
       }
     }
-    .right{
-      margin-left:27px;
-      font-size:20px;
-      .title{
-        color:#003a87;
-        font-size:16px;
-        margin-top:20px;
+
+    .inventory {
+      font-size: 16px;
+      color: #525252;
+      margin-top: 23px;
+
+      span {
+        font-size: 15px;
+        color: #000;
+        margin-left: 26px;
       }
-      .price{
-        width:100%;
-        background-color:#e9e9e9;
-        font-size:16px;
-        padding:18px 0px 18px 13px;
-        color:#494949;
-        margin-top:36px;
-        span{
-          font-size:18px;
-          color:#ff2424;
-          font-weight:600;
-          margin-left:30px;
+    }
+
+    .num {
+      display: flex;
+      justify-content: start;
+      font-size: 16px;
+      color: #525252;
+      align-items: center;
+      margin-top: 22px;
+
+      div {
+        display: flex;
+        justify-content: start;
+        margin-left: 26px;
+
+        p {
+          width: 53px;
+          height: 48px;
+          font-size: 16px;
+          color: #000;
+          align-self: center;
+          line-height: 48px;
+          text-align: center;
+          background-color: #fff;
+          border: 2px solid #d2d2d2;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          margin-left: 0;
+
+          span {
+            width: 25px;
+            height: 20px;
+            border: 2px solid #d2d2d2;
+            display: block;
+            margin-left: 3px;
+            text-align: center;
+            background-color: #fff;
+          }
+
+          span.j {
+            margin-top: 4px;
+          }
         }
       }
-      .inventory{
-        font-size:16px;
-        color:#525252;
-        margin-top:23px;
-        span{
-          font-size:15px;
-          color:#000;
-          margin-left:26px;
-        }
-      }
-      .num{
-        display:flex;
-        justify-content:start;
-        font-size:16px;
-        color:#525252;
-        align-items: center;
-        margin-top:22px;
-        div{
-          display:flex;
-          justify-content:start;
-          margin-left:26px;
-            p{
-              width:53px;
-              height:48px;
-              font-size:16px;
-              color:#000;
-              align-self: center;
-              line-height:48px;
-              text-align:center;
-              background-color:#fff;
-              border:2px solid #d2d2d2;
-            }
-            div{
-              display: flex;
-              flex-direction: column;
-              margin-left:0;
-              span{
-                width:25px;
-                height:20px;
-                border:2px solid #d2d2d2;
-                display: block;
-                margin-left:3px;
-                text-align: center;
-                background-color:#fff;
-              }
-              span.j{
-                margin-top:4px;
-              }
-            }
-        }
-      }
-      .add{
-        button{
-          padding:11px 33px 12px 33px;
-           margin-top:19px;
-           background-color:#215496;
-           color:#fff;
-           font-size:18px;
-           border:none;
-        }
+    }
+
+    .add {
+      button {
+        padding: 11px 33px 12px 33px;
+        margin-top: 19px;
+        background-color: #215496;
+        color: #fff;
+        font-size: 18px;
+        border: none;
       }
     }
   }
-  .bottom{
-      width:100%;
-      height:100%;
-      padding:0px 162px 0px 153px;
-      box-sizing:border-box;
-      ul{
-        width:100%;
-        background-color:#e9e9e9;
-        border-bottom:3px solid #215496;
-        display:flex;
-        justify-content:start;
-        li{
-          padding:16px 22px 18px 22px;
-          background-color:#215496;
-          color:#fff;
-        }
-      }
-      .box-img{
-        width:100%;
-        margin-top:14px;
-        img{
-          width:100%;
-        }
-      }
+}
+
+.bottom {
+  width: 100%;
+  height: 100%;
+  padding: 0px 162px 0px 153px;
+  box-sizing: border-box;
+
+  ul {
+    width: 100%;
+    background-color: #e9e9e9;
+    border-bottom: 3px solid #215496;
+    display: flex;
+    justify-content: start;
+
+    li {
+      padding: 16px 22px 18px 22px;
+      background-color: #215496;
+      color: #fff;
     }
-</style>
+  }
+
+  .box-img {
+    width: 100%;
+    margin-top: 14px;
+
+    img {
+      width: 100%;
+    }
+  }
+}</style>
