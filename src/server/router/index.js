@@ -82,21 +82,23 @@ router.get('/cart', (req, res, next) => {
   })
 })
 
-// 加购物车的数量
-router.get('/cartNum', (req, res, next) => {
-  var sql = `UPDATE wxdata SET num='${req.query.num}' WHERE gid=${req.query.gid}`
-  db.query(sql, (err, result) => {
-    if (err) return next(err)
-    res.s(result, '修改')
-  })
-})
-
-// 查购物车存不存在
-router.get('/isShop', (req, res, next) => {
-  var sql = `SELECT * FROM shop_data WHERE gid=${req.query.gid}`
+// 查询密码
+router.get('/psd', (req, res, next) => {
+  var data = req.query
+  var sql = `SELECT * FROM userinfo WHERE username='${data.username}'`
   db.query(sql, (err, result) => {
     if (err) return next(err)
     res.s(result, '查询')
+  })
+})
+
+// 修改密码
+router.get('/uppsd', (req, res, next) => {
+  var data = req.query
+  var sql = `UPDATE userinfo SET passwrod='${data.password}' WHERE username='${data.username}'`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
   })
 })
 module.exports = router

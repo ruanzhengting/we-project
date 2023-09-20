@@ -3,11 +3,11 @@
   <div class="main">
     <h2 class="order">修改密码</h2>
     <div class="form-box">
-     <ul>
-      <li>原始密码:<input type="text"></li>
-      <li class="xin">新密码:<input type="text"/></li>
-      <li>确认密码:<input type="text"/></li>
-      <li><button>提交修改</button></li>
+     <ul >
+      <li>原始密码:<input type="password" v-model="currentPassword"></li>
+      <li class="xin">新密码:<input type="password" v-model="newPassword"/></li>
+      <li>确认密码:<input type="password" v-model="newTwoPassword"/></li>
+      <li><button @click="changePassword">提交修改</button></li>
      </ul>
     </div>
   </div>
@@ -21,7 +21,9 @@ export default {
   components: {},
   data () {
     return {
-
+      currentPassword: '',
+      newPassword: '',
+      newTwoPassword: ''
     }
   },
   // 计算属性
@@ -30,7 +32,44 @@ export default {
   watch: {},
   // 方法集合
   methods: {
-
+    async changePassword () {
+      var user = JSON.parse(localStorage.getItem('userinfo'))
+      console.log(user)
+      console.log(user.passwrod)
+      console.log(this.currentPassword)
+      if (!this.currentPassword) {
+        return alert('原始密码不能为空')
+      }
+      if (user.passwrod === this.currentPassword) {
+        var res = await this.$axios('/psd', {
+          params: {
+            username: user.username
+          }
+        })
+        console.log(res)
+      } else {
+        alert('原始密码不正确')
+      }
+      if (!this.newPassword) {
+        return alert('新密码不能为空')
+      } else if (!this.newTwoPassword) {
+        return alert('确认密码不能为空')
+      }
+      if (this.newPassword === this.newTwoPassword) {
+        var req = await this.$axios('./uppsd', {
+          params: {
+            password: this.newTwoPassword,
+            username: user.username
+          }
+        })
+        console.log(req)
+      } else {
+        alert('确认密码发生错误')
+      }
+      this.currentPassword = ''
+      this.newPassword = ''
+      this.newTwoPassword = ''
+    }
   },
   // 生命周期，创建完成时（可以访问当前this实例）
   created () {
