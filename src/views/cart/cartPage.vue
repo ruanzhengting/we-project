@@ -11,20 +11,20 @@
       <div class="total">合计</div>
       <div class="operation">操作</div>
     </div>
-    <div class="cart_c">
+    <div class="cart_c" v-for="item in shopData" :key="item.id">
       <input type="checkbox">
       <div class="c_tit">
         <div class="c_boxImg">
-          <img src="" alt="">
+          <img :src="`../../../static/goods/${item.src}`" alt="">
         </div>
-        <p>文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</p>
+        <p>{{ item.title }}</p>
       </div>
-      <div class="c_money">￥<p>2799.00</p>
+      <div class="c_money">￥<p>{{ item.price }}</p>
       </div>
       <div class="c_quantity">
-        <div class="subtract">-</div>
-        <div class="sum">1</div>
-        <div class="plus">+</div>
+        <template>
+  <el-input-number v-model="item.num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+</template>
       </div>
       <div class="c_total">￥<p>2799.00</p>
       </div>
@@ -68,25 +68,30 @@ export default {
   components: {},
   props: {},
   data () {
-    return {}
+    return {
+      shopData: [],
+      num: 1
+    }
   },
   // 计算属性
   computed: {},
   // 监听data中的数据变化
   watch: {},
   // 方法集合
-  methods: {},
+  methods: {
+    async getShopDate () {
+      var res = await this.$axios.get('/cart')
+      console.log(res)
+      this.shopData = res.data.value
+    },
+    handleChange (value) {
+      // console.log(value)
+    }
+  },
   // 生命周期/创建完成时(可以访问当前this实例
-  created () {},
-  // 生命周期:挂载完成时(可以访问DOM元素)
-  mounted () {},
-  beforeCreate () { }, // 生命周期：创建之前
-  beforeMount () { }, // 生命周期：挂载之前
-  beforeUpdate () { }, // 生命周期：更新之前
-  updated () { }, // 生命周期：更新之后
-  beforeDestroy () { }, // 生命周期：销毁之前
-  destroyed () { }, // 生命周期：销毁完成
-  activated () { } // 如果页面有keep-alive缓存功能,这个函数会触发执行
+  created () {
+    this.getShopDate()
+  }
 }
 </script>
 <style scoped lang="less">@import url(./cart.less);</style>

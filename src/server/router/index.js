@@ -82,4 +82,21 @@ router.get('/cart', (req, res, next) => {
   })
 })
 
+// 加购物车的数量
+router.get('/cartNum', (req, res, next) => {
+  var sql = `UPDATE wxdata SET num='${req.query.num}' WHERE gid=${req.query.gid}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
+  })
+})
+
+// 查购物车存不存在
+router.get('/isShop', (req, res, next) => {
+  var sql = `SELECT * FROM shop_data WHERE gid=${req.query.gid}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '查询')
+  })
+})
 module.exports = router

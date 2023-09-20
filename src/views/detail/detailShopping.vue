@@ -73,24 +73,43 @@ export default {
       console.log(res)
       this.goodsData = res.data.value
       this.itemImg = res.data.value[0].src
+      this.num = this.goodsData[0].num
     },
     handleChange (value) {
       console.log(value)
+      this.$axios.get('/cartNum', {
+        params: {
+          num: value,
+          gid: this.goodsData[0].gid
+        }
+      }).then(res => {
+        console.log(res)
+      })
     },
     async addCart () {
-      var reslove = await this.$axios.get('/addCart', {
+      var res = await this.$axios.get('/isShop', {
         params: {
-          gid: this.goodsData[0].gid,
-          src: this.goodsData[0].src,
-          title: this.goodsData[0].title,
-          price: this.goodsData[0].price,
-          num: this.goodsData[0].num
+          gid: this.goodsData[0].gid
         }
       })
-      console.log(reslove)
-      if (reslove.data.code === 200) {
-        this.successMod()
-        this.updateNumSync()
+      // console.log(res)
+      if (res.data.value.length === 0) {
+        var reslove = await this.$axios.get('/addCart', {
+          params: {
+            gid: this.goodsData[0].gid,
+            src: this.goodsData[0].src,
+            title: this.goodsData[0].title,
+            price: this.goodsData[0].price,
+            num: this.goodsData[0].num
+          }
+        })
+        console.log(reslove)
+        if (reslove.data.code === 200) {
+          this.successMod()
+          this.updateNumSync()
+        }
+      } else {
+        this.open2()
       }
     },
     successMod () {
@@ -98,6 +117,13 @@ export default {
         title: '成功',
         message: this.modalMsg,
         type: 'success'
+      })
+    },
+    open2 () {
+      this.$notify({
+        title: '警告',
+        message: '该商品已在购物车',
+        type: 'warning'
       })
     }
   },
@@ -107,18 +133,7 @@ export default {
     this.gid = this.$route.params.id
     this.getDetailData()
     this.updateNumSync()
-  },
-  // 生命周期:挂载完成时(可以访问DOM元素)
-  mounted () {
-
-  },
-  beforeCreate () { }, // 生命周期：创建之前
-  beforeMount () { }, // 生命周期：挂载之前
-  beforeUpdate () { }, // 生命周期：更新之前
-  updated () { }, // 生命周期：更新之后
-  beforeDestroy () { }, // 生命周期：销毁之前
-  destroyed () { }, // 生命周期：销毁完成
-  activated () { } // 如果页面有keep-alive缓存功能,这个函数会触发执行
+  }
 }
 </script>
 <style scoped lang="less">
@@ -287,4 +302,5 @@ export default {
       width: 100%;
     }
   }
-}</style>
+}
+</style>

@@ -73,6 +73,7 @@ export default {
   },
   // 生命周期，创建完成时（可以访问当前this实例）
   created () {
+    this.updateNumSync()
     var userMsg = JSON.parse(localStorage.getItem('userinfo')) || []
     this.user = userMsg.account
   },
