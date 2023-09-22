@@ -1,9 +1,14 @@
 <template>
   <div id='detailShopping'>
     <div class="main" v-for="(item, i) in goodsData" :key="i">
-      <div class="left">
-        <div class="big-img">
+      <div class="left" ref="leftView">
+        <div class="big-img" @mouseover="isShow = true" @mouseout="isShow = false" @mousemove="moveView" ref="bigImg">
           <img :src="`../../../static/goods/${itemImg}`" alt="">
+          <!-- :style="{left: left + 'px', top: top + 'px'}" -->
+          <div class="move" v-show="isShow" :style="{ left: left + 'px', top: top + 'px' }" ref="move"></div>
+        </div>
+        <div class="moveBig_img" v-show="isShow">
+          <img :src="`../../../static/goods/${itemImg}`" :style="{ left: -left * scale + 'px', top: -top * scale + 'px' }" alt="">
         </div>
         <div class="little-img">
           <img v-for="(it, ind) in item.img_bnr.split(',')" :key="ind" :src="`../../../static/goods/${it}`"
@@ -56,7 +61,11 @@ export default {
       goodsData: [],
       itemImg: '',
       num: 1,
-      modalMsg: '加入购物车成功'
+      modalMsg: '加入购物车成功',
+      isShow: false,
+      left: 0,
+      top: 0,
+      scale: 0
     }
   },
   // 计算属性
@@ -77,7 +86,7 @@ export default {
     },
     handleChange (value) {
       console.log(value)
-      this.$axios.get('/cartNum', {
+      this.$axios.get('/detailNum', {
         params: {
           num: value,
           gid: this.goodsData[0].gid
@@ -100,7 +109,9 @@ export default {
             src: this.goodsData[0].src,
             title: this.goodsData[0].title,
             price: this.goodsData[0].price,
-            num: this.goodsData[0].num
+            num: this.goodsData[0].num,
+            total: this.goodsData[0].price,
+            checked: 0
           }
         })
         console.log(reslove)
@@ -125,6 +136,33 @@ export default {
         message: '该商品已在购物车',
         type: 'warning'
       })
+    },
+    moveView (e) {
+      var moveView = this.$refs.move[0]
+      var bigImgView = this.$refs.bigImg[0]
+
+      this.scale = bigImgView.offsetWidth / moveView.offsetWidth
+
+      var offLeft = this.$refs.leftView[0].offsetLeft
+      var offTop = this.$refs.leftView[0].offsetTop
+
+      var moveX = e.clientX - moveView.offsetWidth / 2 - offLeft
+      var moveY = e.pageY - moveView.offsetWidth / 2 - offTop
+      let maxX = bigImgView.offsetWidth - moveView.offsetWidth
+      let maxY = bigImgView.offsetHeight - moveView.offsetHeight
+
+      if (moveX <= 0) {
+        moveX = 0
+      } else if (moveX >= maxX) {
+        moveX = maxX
+      }
+      if (moveY <= 0) {
+        moveY = 0
+      } else if (moveY >= maxY) {
+        moveY = maxY
+      }
+      this.left = moveX
+      this.top = moveY
     }
   },
   // 生命周期,创建完成时(可以访问当前this实例)
@@ -133,6 +171,8 @@ export default {
     this.gid = this.$route.params.id
     this.getDetailData()
     this.updateNumSync()
+  },
+  mounted () {
   }
 }
 </script>
@@ -159,10 +199,43 @@ export default {
   margin-top: 10px;
 
   .left {
-    .big-img img {
-      width: 410px;
-      height: 410px;
-      border: 2px solid #d2d2d2;
+    position: relative;
+
+    .big-img {
+      position: relative;
+
+      img {
+        width: 400px;
+        height: 400px;
+        border: 2px solid #d2d2d2;
+      }
+
+      .move {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(227, 194, 27, 0.4);
+        left: 0;
+        top: 0;
+      }
+    }
+
+    .moveBig_img {
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+      position: absolute;
+      z-index: 10;
+      left: 410px;
+      top: 0;
+
+      img {
+        width: 800px;
+        height: 800px;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
     }
 
     .little-img img {
@@ -302,5 +375,4 @@ export default {
       width: 100%;
     }
   }
-}
-</style>
+}</style>

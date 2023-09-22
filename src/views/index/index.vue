@@ -143,6 +143,7 @@ export default {
           width: 610px;
           height: 34px;
           border: 2px solid #1B598B;
+          text-indent: 1em;
         }
         button{
           width: 80px;

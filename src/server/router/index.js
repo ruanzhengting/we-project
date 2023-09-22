@@ -66,13 +66,27 @@ router.get('/detail', (req, res, next) => {
 
 // 添加购物车
 router.get('/addCart', (req, res, next) => {
-  var sql = `INSERT INTo shop_data VALUES (null,'${req.query.gid}', '${req.query.src}', '${req.query.title}', '${req.query.price}', '${req.query.num}')`
+  var sql = `INSERT INTo shop_data VALUES (null,'${req.query.gid}', '${req.query.src}', '${req.query.title}', '${req.query.price}', '${req.query.num}', '${req.query.total}', '${req.query.checked}')`
   db.query(sql, (err, result) => {
     if (err) return next(err)
     res.s(result, '插入')
   })
 })
-
+router.get('/isShop', (req, res, next) => {
+  var sql = `SELECT * FROM shop_data WHERE gid=${req.query.gid}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '查询')
+  })
+})
+// 修改价格
+router.get('/change/total', (req, res, next) => {
+  var sql = `UPDATE shop_data SET totalMoney='${req.query.money}' WHERE gid=${req.query.gid}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
+  })
+})
 // 查看购物车
 router.get('/cart', (req, res, next) => {
   var sql = `SELECT * FROM shop_data`
@@ -81,7 +95,20 @@ router.get('/cart', (req, res, next) => {
     res.s(result, '查询')
   })
 })
-
+router.get('/detailNum', (req, res, next) => {
+  var sql = `UPDATE wxdata SET num='${req.query.num}' WHERE gid=${req.query.gid}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
+  })
+})
+router.get('/cartNum', (req, res, next) => {
+  var sql = `UPDATE shop_data SET num='${req.query.value}' WHERE gid=${req.query.gid}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
+  })
+})
 // 查询密码
 router.get('/psd', (req, res, next) => {
   var data = req.query
@@ -96,6 +123,23 @@ router.get('/psd', (req, res, next) => {
 router.get('/uppsd', (req, res, next) => {
   var data = req.query
   var sql = `UPDATE userinfo SET passwrod='${data.password}' WHERE username='${data.username}'`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
+  })
+})
+// 修改复选框的值
+router.get('/change/chec', (req, res, next) => {
+  var data = req.query
+  var sql = `UPDATE shop_data SET checked='${req.query.code}' WHERE gid=${data.gid}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
+  })
+})
+router.get('/change/all', (req, res, next) => {
+  var data = req.query
+  var sql = `UPDATE shop_data SET checked='${data.code}'`
   db.query(sql, (err, result) => {
     if (err) return next(err)
     res.s(result, '修改')

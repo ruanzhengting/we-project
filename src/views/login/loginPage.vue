@@ -9,13 +9,20 @@
           <div class="it_us_item">
             <i class="el-icon-user-solid"></i>
           </div>
-          <input type="text" placeholder="请输入用户名" v-model="user">
+          <input type="text" placeholder="请输入用户名" v-model.trim="user">
         </div>
         <div class="it_pass">
           <div class="it_us_item">
             <i class="el-icon-s-tools"></i>
           </div>
           <input type="password" placeholder="请输入密码" v-model="password">
+        </div>
+        <div class="it_code">
+          <div class="it_us_item">
+            <i class="el-icon-s-tools"></i>
+          </div>
+          <input type="text" placeholder="请输入验证码" v-model.trim="code">
+          <button @click="getCode">{{ codeText }}</button>
         </div>
         <div class="it_dl" @click="logIn" :plain="true" duration="400">登录</div>
         <div class="it_bt">
@@ -43,7 +50,13 @@ export default {
     return {
       user: '',
       password: '',
-      msg: '账号或密码不能为空'
+      code: '',
+      msg: '账号或密码不能为空',
+      codeText: '获取验证码',
+      newMsg: '',
+      num: 60,
+      timer: null,
+      isMove: false
     }
   },
   // 计算属性
@@ -59,7 +72,7 @@ export default {
           account: this.user
         }
       })
-      console.log(res)
+      // console.log(res)
       if (res.data.value.length === 0) {
         this.msg = '您的账号不存在，请先注册'
         return this.open4()
@@ -69,16 +82,52 @@ export default {
           password: this.password
         }
       })
-      console.log(res1)
+      // console.log(res1)
       if (res1.data.value.length === 0) {
         this.msg = '您的密码不正确，请重新输入'
         return this.open4()
       }
-      localStorage.setItem('userinfo', JSON.stringify(res.data.value[0]))
-      this.$router.push(`/home`)
+      if (this.code === '') {
+        this.msg = '验证码不能为空'
+        return this.open4()
+      }
+      if (this.code.toLowerCase() === this.newMsg.toLowerCase()) {
+        localStorage.setItem('userinfo', JSON.stringify(res.data.value[0]))
+        this.$router.push(`/home`)
+      } else {
+        this.msg = '验证码不正确'
+        return this.open4()
+      }
     },
     open4 () {
       this.$message.error(this.msg)
+    },
+    openMsg () {
+      this.$message('验证码是' + this.newMsg)
+    },
+    async getCode () {
+      // if (this.user.trim() === '' || this.password.trim() === '') return this.open4()
+
+      if (!this.isMove) {
+        var res2 = await this.$axios.get('https://mock.apifox.cn/m1/1654199-0-default/ks/get_code')
+        // console.log(res2)
+        if (res2.data.code === '200') {
+          this.newMsg = res2.data.img
+          this.openMsg()
+        }
+      }
+      clearInterval(this.timer)
+      this.timer = setInterval(() => {
+        this.isMove = true
+        this.num--
+        this.codeText = this.num + '秒后，获取'
+        if (this.num === 0) {
+          this.codeText = '获取验证码'
+          this.num = 5
+          this.isMove = false
+          clearInterval(this.timer)
+        }
+      }, 1000)
     }
   },
   // 生命周期，创建完成时（可以访问当前this实例）
@@ -139,6 +188,45 @@ export default {
     }
   }
 
+  .it_code {
+    display: flex;
+    align-items: center;
+    margin: 0 23px;
+    // border: 1px solid #bbbbbb;
+    height: 38px;
+    margin-top: 20px;
+
+    .it_us_item {
+      background-color: #f4f4f4;
+      height: 38px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #bbb;
+      width: 38px;
+
+      i {
+        font-size: 18px;
+        color: #8e8e8e;
+      }
+    }
+
+    input {
+      width: 180px;
+      height: 38px;
+      border: 1px solid #bbb;
+      text-indent: 1em;
+    }
+
+    button {
+      flex: 1;
+      margin-left: 20px;
+      height: 38px;
+      background: #1b598b;
+      color: white;
+    }
+  }
+
   .it_dl {
     background-color: #1b598b;
     line-height: 40px;
@@ -173,5 +261,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>
