@@ -20,6 +20,7 @@
           <li class="name"><span>{{ item.title }}</span></li>
           <li class="title"><span>[新品推荐] 全新第10代酷睿处理器，80万小时稳定测试保障，简约环保大机箱!</span></li>
           <li class="price">价格:<span>￥{{ item.price }}</span></li>
+          <li class="addrBtn"><addressVue></addressVue></li>
           <li class="inventory">库存:<span>90</span></li>
           <li class="num">数量:
             <template>
@@ -48,12 +49,14 @@
 
 <script>
 import bottomModel from '../../components/bottomModel.vue'
+import addressVue from '@/components/address.vue'
 import { mapActions } from 'vuex'
 export default {
   name: 'detailShopping',
   // import引入组件才能使用
   components: {
-    bottomModel
+    bottomModel,
+    addressVue
   },
   data () {
     return {
@@ -252,7 +255,6 @@ export default {
   .right {
     margin-left: 27px;
     font-size: 20px;
-
     .title {
       color: #003a87;
       font-size: 16px;
@@ -273,6 +275,9 @@ export default {
         font-weight: 600;
         margin-left: 30px;
       }
+    }
+    .addrBtn{
+      margin-top: 23px;
     }
 
     .inventory {

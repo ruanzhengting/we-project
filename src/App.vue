@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -16,9 +16,23 @@ export default {
   padding: 0;
   border: 0;
 }
-li{list-style: none;}
-a{text-decoration: none; color: black;}
-body{
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+body {
   margin: 0;
+}
+.el-popover__reference-wrapper .el-button span{
+  display: flex;
+}
+.el-popover__reference-wrapper .el-button span i{
+  margin-left: 16px;
 }
 </style>
