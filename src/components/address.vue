@@ -7,13 +7,13 @@
       width="400"
       @hide="hideEvent"
       trigger="click">
-      <select name="" id="province" @change="changePro" v-model="provinceId">
+      <select name="" id="province" @change="changePro" v-model="provinceId" placeholder="请选择身份">
         <option v-for="(item, i) in province" :key="i" :value="i">{{ item.province }}</option>
       </select>
-      <select id="city" @change="changeCity" v-model="cityId">
+      <select id="city" @change="changeCity" v-model="cityId" aria-placeholder="请选择城市">
         <option v-for="(itemC, i) in city" :key="i" :value="i">{{ itemC.city }}</option>
       </select>
-      <select name="" id="area" @change="areaEvent" v-model="areaId">
+      <select name="" id="area" @change="areaEvent" v-model="areaId" aria-placeholder="请选择县">
         <option v-for="(itemA, i) in area" :key="i" :value="i">{{ itemA.area }}</option>
       </select>
       <el-button slot="reference">

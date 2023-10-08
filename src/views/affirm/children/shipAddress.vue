@@ -18,12 +18,13 @@
         <el-input v-model="form.name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="所在城市" :label-width="formLabelWidth">
-        <el-select v-model="form.province" placeholder="请选择">
-          <el-option v-for="item in form.provinceArr" :key="item.id" :label="item.province" :value="item.province"></el-option>
+        <!-- 省份 -->
+        <el-select v-model="form.provinceId" placeholder="请选择" @change="getCityData">
+          <el-option v-for="(item, i) in form.provinceArr" :key="item.id" :label="item.province" :value="i"></el-option>
         </el-select>
-        <el-select v-model="form.city" placeholder="请选择">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+        <!-- 城市 -->
+        <el-select v-model="form.city" placeholder="请选择" @change="joinAddr">
+          <el-option v-for="item in form.cityArr" :key="item.id" :label="item.city" :value="item.city"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="详细地址" :label-width="formLabelWidth">
@@ -56,12 +57,9 @@ export default {
         provinceArr: [],
         provinceId: null,
         city: '',
+        cityArr: [],
         addrs: '',
-        tel: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        tel: ''
       },
       formLabelWidth: '120px',
       addressArr: [
@@ -75,19 +73,48 @@ export default {
   watch: {},
   // 方法集合
   methods: {
-    linkDialog () {
+    async linkDialog () {
       this.dialogFormVisible = false
       console.log('关闭')
+      // this.addressArr.push({name: this.form.name, city: this.form.city, addrs: this.form.addrs, tel: this.form.tel})
+      var res = await this.$axios.get('/add/addr', {
+        params: {
+          name: this.form.name,
+          city: this.form.city,
+          addrs: this.form.addrs,
+          tel: this.form.tel
+        }
+      })
+      console.log(res)
+      this.getAddrDate()
     },
     async getprovinceData () {
       var res = await this.$axios.get('http://82.157.191.232:8090/vuedemo/get_provinces')
-      console.log(res)
       this.form.provinceArr = res.data.data
     },
     dialogForm () {
       this.getprovinceData()
       this.dialogFormVisible = true
+    },
+    async getCityData () {
+      var res = await this.$axios.get('http://82.157.191.232:8090/vuedemo/get_cities', {
+        params: {
+          provinceid: this.form.provinceArr[this.form.provinceId].provinceid
+        }
+      })
+      this.form.cityArr = res.data.data
+    },
+    joinAddr () {
+      this.form.city = this.form.provinceArr[this.form.provinceId].province + this.form.city
+    },
+    async getAddrDate () {
+      var res = await this.$axios.get('/get/addr')
+      console.log(res)
+      this.addressArr = res.data.value
     }
+  },
+  created () {
+    this.getAddrDate()
   }
 }
 </script>

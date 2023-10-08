@@ -161,4 +161,20 @@ router.get('/del/cart', (req, res, next) => {
     res.s(result, '删除')
   })
 })
+// 获取地址
+router.get('/get/addr', (req, res, next) => {
+  var sql = `SELECT * FROM addr`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '查询')
+  })
+})
+// 添加地址
+router.get('/add/addr', (req, res, next) => {
+  var sql = `INSERT INTO addr VALUES (null, '${req.query.name}', '${req.query.city}', '${req.query.addrs}', '${req.query.tel}')`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '插入')
+  })
+})
 module.exports = router
