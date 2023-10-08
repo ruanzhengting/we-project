@@ -1,10 +1,14 @@
 import axios from 'axios'
 const state = {
-  num: 0
+  num: 0,
+  orderArr: []
 }
 const mutations = {
   updateNum (state, n) {
     state.num = n
+  },
+  updateOrderArr (state, arr) {
+    state.orderArr = arr
   }
 }
 const actions = {

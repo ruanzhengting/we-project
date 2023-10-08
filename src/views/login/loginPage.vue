@@ -48,8 +48,8 @@ export default {
   },
   data () {
     return {
-      user: '',
-      password: '',
+      user: '13552321519',
+      password: '123456',
       code: '',
       msg: '账号或密码不能为空',
       codeText: '获取验证码',

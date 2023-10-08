@@ -7,14 +7,14 @@
       width="400"
       @hide="hideEvent"
       trigger="click">
-      <select name="" id="province" @change="changePro()" v-model="provinceId">
-        <option v-for="(item, i) in province" :key="i" :value="item.provinceid">{{ item.province }}</option>
+      <select name="" id="province" @change="changePro" v-model="provinceId">
+        <option v-for="(item, i) in province" :key="i" :value="i">{{ item.province }}</option>
       </select>
       <select id="city" @change="changeCity" v-model="cityId">
-        <option v-for="(itemC, i) in city" :key="i" :value="itemC.cityid">{{ itemC.city }}</option>
+        <option v-for="(itemC, i) in city" :key="i" :value="i">{{ itemC.city }}</option>
       </select>
-      <select name="" id="area">
-        <option value="昌平区" v-for="(itemA, i) in area" :key="i">{{ itemA.area }}</option>
+      <select name="" id="area" @change="areaEvent" v-model="areaId">
+        <option v-for="(itemA, i) in area" :key="i" :value="i">{{ itemA.area }}</option>
       </select>
       <el-button slot="reference">
         <p>{{ addrInfo }}</p>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'addressVue',
   // import引入组件才能使用
@@ -34,18 +35,26 @@ export default {
     return {
       addrInfo: '安徽省芜湖市无为市襄安镇',
       province: [],
-      provinceId: 110000,
+      provinceId: 0,
+      provinceName: '',
       city: [],
-      cityId: null,
-      area: []
+      cityId: 0,
+      cityName: '',
+      area: [],
+      areaId: 0,
+      areaName: '',
+      select: 0
     }
   },
   // 计算属性
-  computed: {},
+  computed: {
+    ...mapState('user', ['userInfo'])
+  },
   // 监听data中的数据变化
   watch: {},
   // 方法集合
   methods: {
+    ...mapMutations('user', ['updataAddr']),
     async getProvince () {
       var res = await this.$axios.get('http://82.157.191.232:8090/vuedemo/get_provinces')
       // console.log(res)
@@ -54,9 +63,11 @@ export default {
       }
     },
     async changePro () {
+      // console.log(this.province[this.provinceId])
+      this.provinceName = this.province[this.provinceId].province
       var res2 = await this.$axios.get('http://82.157.191.232:8090/vuedemo/get_cities', {
         params: {
-          provinceid: this.provinceId
+          provinceid: this.province[this.provinceId].provinceid
         }
       })
       // console.log(res2)
@@ -65,9 +76,11 @@ export default {
       }
     },
     async changeCity () {
+      // console.log(this.city[this.cityId])
+      this.cityName = this.city[this.cityId].city
       var res3 = await this.$axios.get('http://82.157.191.232:8090/vuedemo/get_areas', {
         params: {
-          cityid: this.cityId
+          cityid: this.city[this.cityId].cityid
         }
       })
       // console.log(res3)
@@ -75,11 +88,32 @@ export default {
         this.area = res3.data.data
       }
     },
-    hideEvent () {
-      console.log('1111')
+    areaEvent () {
+      // console.log(this.area[this.areaId])
+      this.areaName = this.area[this.areaId].area
     },
-    aa (text1) {
-      console.log(text1)
+    async hideEvent () {
+      if (this.provinceName === '' || this.cityName === '' || this.areaName === '') return
+      var addrStr = this.provinceName + this.cityName + this.areaName
+      console.log(addrStr)
+      console.log(this.userInfo)
+      var res = await this.$axios.get('/change/addr', {
+        params: {
+          addr: addrStr,
+          id: this.userInfo.id
+        }
+      })
+      console.log(res)
+      var result = await this.$axios.get('/user', {
+        params: {
+          account: this.userInfo.account
+        }
+      })
+      console.log(this.userInfo)
+      console.log(result.data.value[0])
+      localStorage.setItem('userinfo', JSON.stringify(result.data.value[0]))
+      this.updataAddr(result.data.value[0])
+      this.addrInfo = result.data.value[0].addr
     }
   },
   created () {

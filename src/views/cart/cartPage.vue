@@ -28,7 +28,7 @@
       </div>
       <div class="c_total">￥<p>{{ item.totalMoney }}</p>
       </div>
-      <div class="c_del">删除</div>
+      <div class="c_del" @click="open(item.gid)">删除</div>
     </div>
     <div class="cart_b">
       <div class="b_le">
@@ -44,10 +44,10 @@
       <div class="b_re">
         <div class="b_sumPri">
           <p class="">总价：</p>
-          <div class="pri">￥<p class="P_pri">{{ total }}</p>
+          <div class="pri">￥<p class="P_pri">{{ total | toFixedEvnet }}</p>
           </div>
         </div>
-        <div class="b_js">去结算</div>
+        <div class="b_js" @click="linkAffirm">去结算</div>
       </div>
     </div>
     <div class="bottom_btn">
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'cartPage',
   // import引入组件才能使用
@@ -72,7 +73,9 @@ export default {
       shopData: [],
       num: 1,
       total: 0,
-      isChec: false
+      isChec: false,
+      action: '111',
+      selectArr: []
     }
   },
   // 计算属性
@@ -81,6 +84,7 @@ export default {
   watch: {},
   // 方法集合
   methods: {
+    ...mapMutations('shop', ['updateOrderArr']),
     async getShopDate () {
       var res = await this.$axios.get('/cart')
       // console.log(res)
@@ -126,7 +130,6 @@ export default {
       if (chec === 0) {
         checCode = 1
       }
-      console.log(checCode)
       this.$axios.get('/change/chec', {
         params: {
           code: checCode,
@@ -152,6 +155,47 @@ export default {
           this.getShopDate()
         }
       })
+    },
+    open (gid) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.get('/del/cart', {
+          params: {
+            gid: gid
+          }
+        }).then(res => {
+          console.log(res)
+          this.getShopDate()
+        })
+      }).catch(() => {
+        console.log('取消删除')
+      })
+    },
+    linkAffirm () {
+      this.selectArr = []
+      var state = 0
+      for (var i = 0; i < this.shopData.length; i++) {
+        if (this.shopData[i].checked === 1) {
+          this.selectArr.push(this.shopData[i])
+          state = 1
+        }
+      }
+      if (!state) {
+        return this.$message({
+          message: '没有选中任何商品',
+          type: 'warning'
+        })
+      }
+      this.updateOrderArr(this.selectArr)
+      this.$router.push('/affirm')
+    }
+  },
+  filters: {
+    toFixedEvnet (value) {
+      return value.toFixed(2)
     }
   },
   // 生命周期/创建完成时(可以访问当前this实例

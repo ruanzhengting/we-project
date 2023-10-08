@@ -65,6 +65,11 @@ let router = new Router({
               component: () => import('@/views/order/children/changePsd/index')
             }
           ]
+        },
+        {
+          path: '/affirm',
+          name: 'affirmVue',
+          component: () => import('@/views/affirm/affirmVue')
         }
       ]
     }

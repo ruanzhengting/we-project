@@ -145,4 +145,20 @@ router.get('/change/all', (req, res, next) => {
     res.s(result, '修改')
   })
 })
+// 改变用户的名字
+router.get('/change/addr', (req, res, next) => {
+  var sql = `UPDATE userinfo SET addr='${req.query.addr}' WHERE id=${req.query.id}`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '修改')
+  })
+})
+// 删除购物车某一项
+router.get('/del/cart', (req, res, next) => {
+  var sql = `DELETE FROM shop_data WHERE gid='${req.query.gid}'`
+  db.query(sql, (err, result) => {
+    if (err) return next(err)
+    res.s(result, '删除')
+  })
+})
 module.exports = router
